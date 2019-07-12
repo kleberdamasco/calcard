@@ -56,6 +56,16 @@ public class ClienteController {
 		}
 	}
 
+	@GetMapping("/cliente/consultar/{cpf}")
+	public ResponseEntity<PropostaResultDTO> clienteById(@PathVariable String cpf) {
+		Cliente cliente = repository.findByCpf(cpf);
+		if (cliente != null) {
+			return new ResponseEntity<>(new PropostaResultDTO(cliente.getResultado(), cliente.getLimite()), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+	}
+
 	@DeleteMapping("/cliente/delete/{id}")
 	public void deleteCliente(@PathVariable Long id) {
 		repository.deleteById(id);
